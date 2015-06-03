@@ -1,6 +1,18 @@
 FROM ruby:2.2.2
-RUN gem install rack
-RUN gem install puma
+
+ADD / /app
+RUN chmod 755 /app
+
+WORKDIR "/app"
+
+# Node
+RUN apt-get update
+RUN apt-get install -y nodejs
+RUN apt-get install -y npm
+
+# Ruby
+RUN gem install bundler
+RUN bundle install
+
 EXPOSE 3000
-ADD /config.ru /config.ru
-CMD ["puma", "/config.ru", "-p", "3000"]
+CMD ["bundle", "exec", "rails", "server"]
