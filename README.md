@@ -16,11 +16,14 @@ These are the steps that I took in order to get Docker working as desired on my 
   8. Select the Network tab, click on "Port Forwarding"
   9. Enter desired port forwarding. Guest IP can be left blank, 127.0.0.1 for host ip.
     - Forward port 3000 in order to see the example in this repo.
-  10. Run `docker-compose up` from the `docker-foolery` directory.
+  10. [Install docker-compse](https://docs.docker.com/compose/install/)
+  11. `docker-compose up` from the `docker-foolery` directory.
 
   Useful Stuff (does not seem to worked when aliased):
 
 ```ruby
+    # List all image ids:
+    docker images | awk '{if(NR==1){}else{print $3}}'
     # List all containers ids:
     docker ps -a | awk '{ if(NR==1){}else{print $1}}'
 
@@ -32,4 +35,7 @@ These are the steps that I took in order to get Docker working as desired on my 
 
     # Force remove of all containers:
     docker rm -f $(docker ps -a | awk '{ if(NR==1){}else{print $1}}')
+
+    # Force removal of all images:
+    docker rmi -f $(docker images | awk '{if(NR==1){}else{print $3}}')
 ```
